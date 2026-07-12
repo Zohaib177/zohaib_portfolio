@@ -1,14 +1,16 @@
-function SectionPlaceholder({ id, title }) {
-  const headingId = `${id}-heading`
+import SectionHeading from './SectionHeading.jsx'
+import SectionWrapper from '../layout/SectionWrapper.jsx'
 
+function SectionPlaceholder({ id, title, description, headingLevel = 'h2' }) {
   return (
-    <section id={id} className="section-spacing" aria-labelledby={headingId}>
-      <div className="site-container">
-        <h2 id={headingId} className="text-3xl font-semibold sm:text-4xl">
-          {title}
-        </h2>
-      </div>
-    </section>
+    <SectionWrapper id={id} ariaLabelledBy={`${id}-heading`}>
+      <SectionHeading
+        id={`${id}-heading`}
+        title={title}
+        description={description}
+        headingLevel={headingLevel}
+      />
+    </SectionWrapper>
   )
 }
 
