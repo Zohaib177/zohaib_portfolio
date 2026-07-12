@@ -11,7 +11,7 @@ export const personalData = {
   introduction:
     'I build responsive web applications, mobile applications and reliable backend systems using modern technologies.',
   availability: 'Open to internships and opportunities',
-  resumePath: '/Zohaib-Akhtar-Resume.pdf',
+  resumePath: null,
   socialLinks: {
     github: 'https://github.com/your-username',
     linkedin: 'https://www.linkedin.com/in/your-username',

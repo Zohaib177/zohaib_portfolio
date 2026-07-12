@@ -15,6 +15,7 @@ import ScrollLink from '../common/ScrollLink.jsx'
 import SocialLink from '../common/SocialLink.jsx'
 import SectionWrapper from '../layout/SectionWrapper.jsx'
 import { personalData } from '../../data/personalData.js'
+import { isUsableContactLink } from '../../utils/contactLinks.js'
 
 const technologies = ['Python', 'React', 'Flutter', 'FastAPI', 'MySQL']
 
@@ -27,6 +28,10 @@ function Hero() {
     delay: shouldReduceMotion ? 0 : delay,
     ease: [0.22, 1, 0.36, 1],
   })
+  const hasGitHub = isUsableContactLink(personalData.socialLinks.github)
+  const hasLinkedIn = isUsableContactLink(personalData.socialLinks.linkedin)
+  const hasEmail = isUsableContactLink(personalData.socialLinks.email)
+  const hasSocialLinks = hasGitHub || hasLinkedIn || hasEmail
 
   return (
     <SectionWrapper
@@ -118,42 +123,53 @@ function Hero() {
             >
               Contact Me
             </ScrollLink>
-            <Button
-              href={personalData.resumePath}
-              target="_blank"
-              rel="noopener noreferrer"
-              variant="ghost"
-              size="large"
-              rightIcon={<FiExternalLink />}
-              className="w-full xs:w-auto"
-            >
-              View Resume
-            </Button>
+            {personalData.resumePath && (
+              <Button
+                href={personalData.resumePath}
+                target="_blank"
+                rel="noopener noreferrer"
+                variant="ghost"
+                size="large"
+                rightIcon={<FiExternalLink />}
+                className="w-full xs:w-auto"
+                aria-label="View Zohaib Akhtar's resume PDF in a new tab"
+              >
+                View Resume
+              </Button>
+            )}
           </motion.div>
 
-          <motion.div
-            initial={initial}
-            animate={reveal}
-            transition={transition(0.42)}
-            className="mt-7 flex items-center gap-3"
-            aria-label="Social links"
-          >
-            <SocialLink
-              href={personalData.socialLinks.github}
-              label="Visit Zohaib Akhtar's GitHub profile"
-              icon={<FiGithub />}
-            />
-            <SocialLink
-              href={personalData.socialLinks.linkedin}
-              label="Visit Zohaib Akhtar's LinkedIn profile"
-              icon={<FiLinkedin />}
-            />
-            <SocialLink
-              href={personalData.socialLinks.email}
-              label="Email Zohaib Akhtar"
-              icon={<FiMail />}
-            />
-          </motion.div>
+          {hasSocialLinks && (
+            <motion.div
+              initial={initial}
+              animate={reveal}
+              transition={transition(0.42)}
+              className="mt-7 flex items-center gap-3"
+              aria-label="Social links"
+            >
+              {hasGitHub && (
+                <SocialLink
+                  href={personalData.socialLinks.github}
+                  label="Visit Zohaib Akhtar's GitHub profile"
+                  icon={<FiGithub />}
+                />
+              )}
+              {hasLinkedIn && (
+                <SocialLink
+                  href={personalData.socialLinks.linkedin}
+                  label="Visit Zohaib Akhtar's LinkedIn profile"
+                  icon={<FiLinkedin />}
+                />
+              )}
+              {hasEmail && (
+                <SocialLink
+                  href={personalData.socialLinks.email}
+                  label="Email Zohaib Akhtar"
+                  icon={<FiMail />}
+                />
+              )}
+            </motion.div>
+          )}
 
           <motion.div
             initial={initial}

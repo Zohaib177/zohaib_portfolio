@@ -3,14 +3,12 @@ import { FiArrowUp, FiGithub, FiLinkedin, FiMail } from 'react-icons/fi'
 import { navigationLinks } from '../../data/navigationData.js'
 import { personalData } from '../../data/personalData.js'
 import { isUsableContactLink } from '../../utils/contactLinks.js'
+import { scrollToSection } from '../../utils/scrollToSection.js'
 import Container from './Container.jsx'
 
-function scrollToSection(event, sectionId) {
+function handleSectionLink(event, sectionId) {
   event.preventDefault()
-  const section = document.getElementById(sectionId)
-  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
-  section?.scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth', block: 'start' })
-  window.history.pushState(null, '', `#${sectionId}`)
+  scrollToSection(sectionId)
 }
 
 const socialItems = [
@@ -30,9 +28,7 @@ function Footer() {
   }, [])
 
   const handleBackToTop = () => {
-    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
-    document.getElementById('home')?.scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth' })
-    window.history.pushState(null, '', '#home')
+    scrollToSection('home')
   }
 
   return (
@@ -42,7 +38,7 @@ function Footer() {
           <div className="sm:col-span-2 lg:col-span-1">
             <a
               href="#home"
-              onClick={(event) => scrollToSection(event, 'home')}
+              onClick={(event) => handleSectionLink(event, 'home')}
               aria-label="Zohaib Akhtar — back to home"
               className="focus-ring inline-flex rounded-control font-heading text-2xl font-bold tracking-[-0.04em] text-foreground"
             >
@@ -61,7 +57,7 @@ function Footer() {
                 <li key={link.sectionId}>
                   <a
                     href={link.href}
-                    onClick={(event) => scrollToSection(event, link.sectionId)}
+                    onClick={(event) => handleSectionLink(event, link.sectionId)}
                     className="focus-ring inline-flex min-h-9 items-center rounded text-sm text-muted transition-colors hover:text-accent"
                   >
                     {link.name}

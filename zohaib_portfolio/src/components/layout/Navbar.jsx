@@ -4,8 +4,10 @@ import { FiExternalLink, FiMenu, FiX } from 'react-icons/fi'
 import Button from '../common/Button.jsx'
 import NavLink from '../common/NavLink.jsx'
 import { navigationLinks } from '../../data/navigationData.js'
+import { personalData } from '../../data/personalData.js'
 import useActiveSection from '../../hooks/useActiveSection.js'
 import useClickOutside from '../../hooks/useClickOutside.js'
+import { scrollToSection } from '../../utils/scrollToSection.js'
 import Container from './Container.jsx'
 
 const sectionIds = navigationLinks.map((link) => link.sectionId)
@@ -39,7 +41,7 @@ function Navbar() {
         menuButtonRef.current?.focus()
       }
     }
-    const desktopMedia = window.matchMedia('(min-width: 768px)')
+    const desktopMedia = window.matchMedia('(min-width: 1024px)')
     const handleDesktopChange = (event) => {
       if (event.matches) closeMenu()
     }
@@ -56,10 +58,7 @@ function Navbar() {
 
   const handleLogoClick = (event) => {
     event.preventDefault()
-    const homeSection = document.getElementById('home')
-    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
-    homeSection?.scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth' })
-    window.history.pushState(null, '', '#home')
+    scrollToSection('home')
     closeMenu()
   }
 
@@ -86,7 +85,7 @@ function Navbar() {
             ZA<span className="text-accent">.</span>
           </a>
 
-          <div className="hidden items-center gap-5 md:flex lg:gap-7">
+          <div className="hidden items-center gap-5 lg:flex lg:gap-7">
             <div className="flex items-center gap-3 lg:gap-5">
               {navigationLinks.map((link) => (
                 <NavLink
@@ -96,23 +95,25 @@ function Navbar() {
                 />
               ))}
             </div>
-            <Button
-              href="/Zohaib-Akhtar-Resume.pdf"
-              target="_blank"
-              rel="noopener noreferrer"
-              variant="outline"
-              size="small"
-              rightIcon={<FiExternalLink />}
-              aria-label="Open Zohaib Akhtar's resume in a new tab"
-            >
-              Resume
-            </Button>
+            {personalData.resumePath && (
+              <Button
+                href={personalData.resumePath}
+                target="_blank"
+                rel="noopener noreferrer"
+                variant="outline"
+                size="small"
+                rightIcon={<FiExternalLink />}
+                aria-label="Open Zohaib Akhtar's resume PDF in a new tab"
+              >
+                Resume
+              </Button>
+            )}
           </div>
 
           <button
             ref={menuButtonRef}
             type="button"
-            className="focus-ring flex size-11 items-center justify-center rounded-control border border-border-subtle text-xl text-foreground transition-colors hover:border-border-hover hover:bg-white/5 md:hidden"
+            className="focus-ring flex size-11 items-center justify-center rounded-control border border-border-subtle text-xl text-foreground transition-colors hover:border-border-hover hover:bg-white/5 lg:hidden"
             aria-label={isMenuOpen ? 'Close navigation menu' : 'Open navigation menu'}
             aria-expanded={isMenuOpen}
             aria-controls="mobile-navigation"
@@ -129,7 +130,7 @@ function Navbar() {
                 animate={{ opacity: 1, y: 0 }}
                 exit={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, y: -6 }}
                 transition={{ duration: shouldReduceMotion ? 0 : 0.18, ease: 'easeOut' }}
-                className="professional-border absolute top-[calc(100%+0.75rem)] right-0 left-0 overflow-hidden rounded-card bg-card-elevated p-3 shadow-card md:hidden"
+                className="professional-border absolute top-[calc(100%+0.75rem)] right-0 left-0 overflow-hidden rounded-card bg-card-elevated p-3 shadow-card lg:hidden"
               >
                 <div className="flex flex-col">
                   {navigationLinks.map((link, index) => (
@@ -143,21 +144,23 @@ function Navbar() {
                     />
                   ))}
                 </div>
-                <div className="mt-3 border-t border-border-subtle pt-3">
-                  <Button
-                    href="/Zohaib-Akhtar-Resume.pdf"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    variant="outline"
-                    size="medium"
-                    rightIcon={<FiExternalLink />}
-                    className="w-full"
-                    onClick={closeMenu}
-                    aria-label="Open Zohaib Akhtar's resume in a new tab"
-                  >
-                    Resume
-                  </Button>
-                </div>
+                {personalData.resumePath && (
+                  <div className="mt-3 border-t border-border-subtle pt-3">
+                    <Button
+                      href={personalData.resumePath}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      variant="outline"
+                      size="medium"
+                      rightIcon={<FiExternalLink />}
+                      className="w-full"
+                      onClick={closeMenu}
+                      aria-label="Open Zohaib Akhtar's resume PDF in a new tab"
+                    >
+                      Resume
+                    </Button>
+                  </div>
+                )}
               </motion.div>
             )}
           </AnimatePresence>

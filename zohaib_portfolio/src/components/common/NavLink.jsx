@@ -1,20 +1,9 @@
+import { scrollToSection } from '../../utils/scrollToSection.js'
+
 function NavLink({ link, isActive, onNavigate, mobile = false, linkRef }) {
   const handleClick = (event) => {
     event.preventDefault()
-    const section = document.getElementById(link.sectionId)
-
-    if (!section) return
-
-    const reduceMotion = window.matchMedia(
-      '(prefers-reduced-motion: reduce)',
-    ).matches
-
-    section.scrollIntoView({
-      behavior: reduceMotion ? 'auto' : 'smooth',
-      block: 'start',
-    })
-    window.history.pushState(null, '', link.href)
-    onNavigate?.()
+    if (scrollToSection(link.sectionId)) onNavigate?.()
   }
 
   return (

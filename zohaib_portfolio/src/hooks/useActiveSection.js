@@ -41,7 +41,27 @@ function useActiveSection(sectionIds) {
 
     sections.forEach((section) => observer.observe(section))
 
-    return () => observer.disconnect()
+    const handlePageEdges = () => {
+      if (window.scrollY < 24) {
+        setActiveSection((current) => (current === ids[0] ? current : ids[0]))
+        return
+      }
+
+      const nearPageBottom =
+        window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 80
+      const lastId = ids.at(-1)
+      if (nearPageBottom && lastId) {
+        setActiveSection((current) => (current === lastId ? current : lastId))
+      }
+    }
+
+    handlePageEdges()
+    window.addEventListener('scroll', handlePageEdges, { passive: true })
+
+    return () => {
+      observer.disconnect()
+      window.removeEventListener('scroll', handlePageEdges)
+    }
   }, [sectionKey])
 
   return activeSection

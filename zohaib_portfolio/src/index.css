@@ -56,7 +56,6 @@ body {
   min-width: 320px;
   min-height: 100vh;
   margin: 0;
-  overflow-x: hidden;
   background-color: var(--color-background);
   background-image:
     radial-gradient(circle at 50% -10%, rgb(59 130 246 / 0.11), transparent 36rem),
@@ -70,7 +69,6 @@ body {
 
 #app {
   min-height: 100vh;
-  overflow: clip;
 }
 
 ::selection {

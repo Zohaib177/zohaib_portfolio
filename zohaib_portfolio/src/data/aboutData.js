@@ -19,7 +19,7 @@ export const aboutData = {
     field: 'Data Science and Software Development',
     status: 'Currently Studying',
     location: 'Pakistan',
-    university: 'Add university name',
+    university: null,
   },
   focusAreas: [
     'Data Science foundations',

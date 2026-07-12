@@ -96,6 +96,16 @@ function Contact() {
       setErrors(nextErrors)
       setFormState('error')
       setFeedback('Please correct the highlighted fields.')
+      const fieldIds = {
+        fullName: 'full-name',
+        email: 'email-address',
+        subject: 'subject',
+        message: 'message',
+      }
+      const firstInvalidField = Object.keys(nextErrors)[0]
+      window.requestAnimationFrame(() => {
+        document.getElementById(fieldIds[firstInvalidField])?.focus()
+      })
       return
     }
 
@@ -241,6 +251,7 @@ function Contact() {
                 label="Subject"
                 name="subject"
                 type="text"
+                autoComplete="off"
                 placeholder="What would you like to discuss?"
                 value={formValues.subject}
                 error={errors.subject}
@@ -252,6 +263,7 @@ function Contact() {
                 label="Message"
                 name="message"
                 as="textarea"
+                autoComplete="off"
                 maxLength={1500}
                 placeholder="Write your message here"
                 value={formValues.message}

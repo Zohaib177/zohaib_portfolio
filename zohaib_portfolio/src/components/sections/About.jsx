@@ -138,12 +138,14 @@ function About() {
                     {aboutData.education.field}
                   </dd>
                 </div>
-                <div>
-                  <dt className="text-xs font-semibold tracking-wider text-muted uppercase">University</dt>
-                  <dd className="mt-1 text-sm italic text-muted">
-                    {aboutData.education.university}
-                  </dd>
-                </div>
+                {aboutData.education.university && (
+                  <div>
+                    <dt className="text-xs font-semibold tracking-wider text-muted uppercase">University</dt>
+                    <dd className="mt-1 text-sm text-foreground-secondary">
+                      {aboutData.education.university}
+                    </dd>
+                  </div>
+                )}
                 <div>
                   <dt className="text-xs font-semibold tracking-wider text-muted uppercase">Location</dt>
                   <dd className="mt-1 flex items-center gap-1.5 text-sm font-medium text-foreground-secondary">
