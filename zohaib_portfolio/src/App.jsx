@@ -11,7 +11,7 @@ function App() {
   return (
     <>
       <Navbar />
-      <main id="main-content">
+      <main id="main-content" className="pt-[72px]">
         <Hero />
         <About />
         <Skills />
