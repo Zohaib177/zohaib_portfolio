@@ -4,11 +4,13 @@ import {
   FiCode,
   FiExternalLink,
   FiGithub,
+  FiInstagram,
   FiLinkedin,
   FiMail,
   FiMapPin,
   FiMessageSquare,
 } from 'react-icons/fi'
+import { FaFacebookF, FaXTwitter } from 'react-icons/fa6'
 import Badge from '../common/Badge.jsx'
 import Button from '../common/Button.jsx'
 import ScrollLink from '../common/ScrollLink.jsx'
@@ -30,8 +32,11 @@ function Hero() {
   })
   const hasGitHub = isUsableContactLink(personalData.socialLinks.github)
   const hasLinkedIn = isUsableContactLink(personalData.socialLinks.linkedin)
+  const hasInstagram = isUsableContactLink(personalData.socialLinks.instagram)
+  const hasX = isUsableContactLink(personalData.socialLinks.x)
+  const hasFacebook = isUsableContactLink(personalData.socialLinks.facebook)
   const hasEmail = isUsableContactLink(personalData.socialLinks.email)
-  const hasSocialLinks = hasGitHub || hasLinkedIn || hasEmail
+  const hasSocialLinks = hasGitHub || hasLinkedIn || hasInstagram || hasX || hasFacebook || hasEmail
 
   return (
     <SectionWrapper
@@ -161,6 +166,27 @@ function Hero() {
                   icon={<FiLinkedin />}
                 />
               )}
+              {hasInstagram && (
+                <SocialLink
+                  href={personalData.socialLinks.instagram}
+                  label="Visit Zohaib Akhtar's Instagram profile"
+                  icon={<FiInstagram />}
+                />
+              )}
+              {hasX && (
+                <SocialLink
+                  href={personalData.socialLinks.x}
+                  label="Visit Zohaib Akhtar's X profile"
+                  icon={<FaXTwitter />}
+                />
+              )}
+              {hasFacebook && (
+                <SocialLink
+                  href={personalData.socialLinks.facebook}
+                  label="Visit Zohaib Akhtar's Facebook profile"
+                  icon={<FaFacebookF />}
+                />
+              )}
               {hasEmail && (
                 <SocialLink
                   href={personalData.socialLinks.email}
@@ -202,7 +228,7 @@ function Hero() {
                 ? undefined
                 : { duration: 6, repeat: Infinity, ease: 'easeInOut' }
             }
-            className="professional-border soft-blue-glow relative overflow-hidden rounded-[1.25rem] bg-card/95 shadow-card"
+            className="professional-border metallic-glow relative overflow-hidden rounded-[1.25rem] bg-card/95 shadow-card"
           >
             <div className="flex h-11 items-center gap-2 border-b border-border-subtle bg-card-elevated px-4">
               <span className="size-2.5 rounded-full bg-error/75" />
@@ -244,13 +270,13 @@ function Hero() {
             </div>
           </motion.div>
 
-          <span className="absolute -top-5 right-8 hidden rounded-full border border-border-subtle bg-card-elevated px-3 py-1.5 text-xs font-medium text-blue-300 shadow-card lg:block">
+          <span className="absolute -top-5 right-8 hidden rounded-full border border-border-subtle bg-card-elevated px-3 py-1.5 text-xs font-medium text-accent shadow-card lg:block">
             Python
           </span>
-          <span className="absolute top-1/3 -right-5 hidden rounded-full border border-border-subtle bg-card-elevated px-3 py-1.5 text-xs font-medium text-violet-300 shadow-card xl:block">
+          <span className="absolute top-1/3 -right-5 hidden rounded-full border border-border-subtle bg-card-elevated px-3 py-1.5 text-xs font-medium text-accent-secondary-hover shadow-card xl:block">
             Data Science
           </span>
-          <span className="absolute -bottom-4 left-8 hidden rounded-full border border-border-subtle bg-card-elevated px-3 py-1.5 text-xs font-medium text-blue-300 shadow-card lg:block">
+          <span className="absolute -bottom-4 left-8 hidden rounded-full border border-border-subtle bg-card-elevated px-3 py-1.5 text-xs font-medium text-accent shadow-card lg:block">
             React + Flutter
           </span>
         </motion.div>

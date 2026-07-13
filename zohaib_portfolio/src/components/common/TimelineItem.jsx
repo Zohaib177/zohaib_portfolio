@@ -40,10 +40,10 @@ function TimelineItem({ item, animationProps }) {
         <span
           className={`flex size-9 items-center justify-center rounded-full border bg-background-secondary text-sm ${
             isCurrent
-              ? 'animate-pulse border-accent bg-accent text-white shadow-[0_0_0_5px_rgb(59_130_246/0.10)] motion-reduce:animate-none'
+              ? 'animate-pulse border-accent bg-accent text-background shadow-[0_0_0_5px_rgb(212_173_104/0.10)] motion-reduce:animate-none'
               : isFuture
                 ? 'border-muted/45 text-muted'
-                : 'border-blue-400/40 text-blue-300'
+                : 'border-accent/40 text-accent'
           }`}
         >
           {item.status === 'completed' ? (
@@ -57,7 +57,7 @@ function TimelineItem({ item, animationProps }) {
       <Card
         hover
         className={`mb-7 ml-3 min-w-0 md:ml-5 ${
-          isCurrent ? 'border-border-hover bg-blue-500/[0.06]' : isFuture ? 'bg-card/70' : ''
+          isCurrent ? 'border-border-hover bg-accent/[0.06]' : isFuture ? 'bg-card/70' : ''
         }`}
       >
         <div className="flex flex-wrap items-center gap-2.5">

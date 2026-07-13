@@ -6,6 +6,26 @@ import SectionWrapper from '../layout/SectionWrapper.jsx'
 import { coreSkills, skillsData } from '../../data/skillsData.js'
 import { getSkillIcon } from '../../utils/skillIconMap.jsx'
 
+const marqueeSkills = Array.from(
+  new Map(
+    [...coreSkills, ...skillsData.flatMap((category) => category.skills)].map((skill) => [
+      skill.name,
+      skill,
+    ]),
+  ).values(),
+)
+
+function MarqueeSkill({ skill }) {
+  const Icon = getSkillIcon(skill.icon)
+
+  return (
+    <li className="flex shrink-0 items-center gap-3 text-base font-semibold text-foreground-secondary sm:text-lg">
+      <Icon className="text-xl text-accent sm:text-2xl" aria-hidden="true" />
+      <span>{skill.name}</span>
+    </li>
+  )
+}
+
 function Skills() {
   const shouldReduceMotion = useReducedMotion()
   const hidden = shouldReduceMotion ? { opacity: 1, y: 0 } : { opacity: 0, y: 18 }
@@ -37,20 +57,29 @@ function Skills() {
         whileInView={visible}
         viewport={viewport}
         transition={{ ...transition, delay: shouldReduceMotion ? 0 : 0.08 }}
-        className="professional-border mt-10 rounded-card bg-card-elevated/80 p-5 shadow-card sm:p-6"
+        className="professional-border mt-10 overflow-hidden rounded-card bg-card-elevated/80 py-6 shadow-card sm:py-7"
       >
-        <div className="flex flex-col gap-1 sm:flex-row sm:items-end sm:justify-between sm:gap-6">
-          <div>
-            <p className="text-xs font-semibold tracking-[0.16em] text-accent uppercase">Selected Technologies</p>
-            <h3 className="mt-1.5 text-xl font-semibold text-foreground sm:text-2xl">Core Stack</h3>
-          </div>
-          <p className="mt-2 text-sm text-muted sm:mt-0">A representative set of tools I currently work with.</p>
+        <div className="px-5 text-center sm:px-6">
+          <p className="text-xs font-semibold tracking-[0.18em] text-accent uppercase sm:text-sm">
+            Technologies I Work With
+          </p>
+          <h3 className="sr-only">My technology stack</h3>
         </div>
-        <ul className="mt-5 grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-6">
-          {coreSkills.map((skill) => (
-            <SkillBadge key={skill.name} {...skill} featured />
-          ))}
-        </ul>
+
+        <div className="skill-marquee mt-7" role="region" aria-label="Scrolling technology skills">
+          <div className="skill-marquee__track">
+            <ul className="skill-marquee__list" aria-label="Technology skills">
+              {marqueeSkills.map((skill) => (
+                <MarqueeSkill key={`primary-${skill.name}`} skill={skill} />
+              ))}
+            </ul>
+            <ul className="skill-marquee__list" aria-hidden="true">
+              {marqueeSkills.map((skill) => (
+                <MarqueeSkill key={`duplicate-${skill.name}`} skill={skill} />
+              ))}
+            </ul>
+          </div>
+        </div>
       </motion.div>
 
       <motion.div

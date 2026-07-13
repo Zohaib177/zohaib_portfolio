@@ -12,9 +12,13 @@ export const personalData = {
     'I build responsive web applications, mobile applications and reliable backend systems using modern technologies.',
   availability: 'Open to internships and opportunities',
   resumePath: null,
+  whatsappNumber: '923192244730',
   socialLinks: {
-    github: 'https://github.com/your-username',
-    linkedin: 'https://www.linkedin.com/in/your-username',
-    email: 'mailto:your-email@example.com',
+    github: 'https://github.com/Zohaib177',
+    linkedin: 'https://www.linkedin.com/in/zohaib-akhtar-44875a3ba',
+    instagram: 'https://www.instagram.com/zo4aib_malik?igsh=dmJ0YnJkcnk2cXB1',
+    x: 'https://x.com/eduNestX119425',
+    facebook: 'https://www.facebook.com/share/1EvnwH5yR2/',
+    email: 'mailto:edunestx@gmail.com',
   },
 }

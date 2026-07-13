@@ -1,6 +1,6 @@
 const variantClasses = {
-  primary: 'bg-accent text-white hover:bg-blue-500',
-  secondary: 'bg-accent-secondary text-white hover:bg-violet-500',
+  primary: 'bg-accent text-background hover:bg-accent-hover',
+  secondary: 'bg-accent-secondary text-background hover:bg-accent-secondary-hover',
   outline: 'border border-border-subtle bg-transparent text-foreground hover:border-border-hover hover:bg-white/5',
   ghost: 'bg-transparent text-foreground-secondary hover:bg-white/5 hover:text-foreground',
 }

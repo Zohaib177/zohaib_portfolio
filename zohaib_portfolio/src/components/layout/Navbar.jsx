@@ -80,9 +80,15 @@ function Navbar() {
             href="#home"
             onClick={handleLogoClick}
             aria-label="Zohaib Akhtar — go to home section"
-            className="focus-ring shrink-0 rounded-control font-heading text-xl font-bold tracking-[-0.04em] text-foreground sm:text-2xl"
+            className="brand-logo brand-logo--nav focus-ring shrink-0 rounded-control"
           >
-            ZA<span className="text-accent">.</span>
+            <img
+              src="/zw-logo.png"
+              alt=""
+              width="76"
+              height="76"
+              className="brand-logo__image"
+            />
           </a>
 
           <div className="hidden items-center gap-5 lg:flex lg:gap-7">

@@ -1,6 +1,6 @@
 const variantClasses = {
   default: 'border-border-subtle bg-white/5 text-foreground-secondary',
-  primary: 'border-blue-400/20 bg-blue-500/10 text-blue-300',
+  primary: 'border-accent/25 bg-accent/10 text-accent-hover',
   success: 'border-green-400/20 bg-green-500/10 text-green-300',
 }
 

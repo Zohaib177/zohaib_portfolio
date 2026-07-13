@@ -1,6 +1,6 @@
 const statusStyles = {
-  completed: 'border-blue-400/20 bg-blue-500/10 text-blue-300',
-  current: 'border-blue-400/35 bg-blue-500/15 text-blue-200',
+  completed: 'border-accent/20 bg-accent/10 text-accent-hover',
+  current: 'border-accent/35 bg-accent/15 text-accent-hover',
   future: 'border-border-subtle bg-white/5 text-muted',
 }
 

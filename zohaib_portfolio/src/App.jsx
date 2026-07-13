@@ -1,6 +1,8 @@
 import Navbar from './components/layout/Navbar.jsx'
 import Footer from './components/layout/Footer.jsx'
+import FloatingWhatsApp from './components/common/FloatingWhatsApp.jsx'
 import About from './components/sections/About.jsx'
+import Blog from './components/sections/Blog.jsx'
 import Contact from './components/sections/Contact.jsx'
 import Hero from './components/sections/Hero.jsx'
 import Journey from './components/sections/Journey.jsx'
@@ -22,9 +24,11 @@ function App() {
         <About />
         <Skills />
         <Projects />
+        <Blog />
         <Journey />
         <Contact />
       </main>
+      <FloatingWhatsApp />
       <Footer />
     </>
   )

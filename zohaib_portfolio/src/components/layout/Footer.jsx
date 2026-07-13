@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
-import { FiArrowUp, FiGithub, FiLinkedin, FiMail } from 'react-icons/fi'
+import { FiArrowUp, FiGithub, FiInstagram, FiLinkedin, FiMail } from 'react-icons/fi'
+import { FaFacebookF, FaXTwitter } from 'react-icons/fa6'
 import { navigationLinks } from '../../data/navigationData.js'
 import { personalData } from '../../data/personalData.js'
 import { isUsableContactLink } from '../../utils/contactLinks.js'
@@ -14,6 +15,9 @@ function handleSectionLink(event, sectionId) {
 const socialItems = [
   { key: 'github', label: 'GitHub', icon: FiGithub },
   { key: 'linkedin', label: 'LinkedIn', icon: FiLinkedin },
+  { key: 'instagram', label: 'Instagram', icon: FiInstagram },
+  { key: 'x', label: 'X (Twitter)', icon: FaXTwitter },
+  { key: 'facebook', label: 'Facebook', icon: FaFacebookF },
   { key: 'email', label: 'Email', icon: FiMail },
 ]
 
@@ -40,9 +44,15 @@ function Footer() {
               href="#home"
               onClick={(event) => handleSectionLink(event, 'home')}
               aria-label="Zohaib Akhtar — back to home"
-              className="focus-ring inline-flex rounded-control font-heading text-2xl font-bold tracking-[-0.04em] text-foreground"
+              className="brand-logo brand-logo--footer focus-ring rounded-control"
             >
-              ZA<span className="text-accent">.</span>
+              <img
+                src="/zw-logo.png"
+                alt=""
+                width="96"
+                height="96"
+                className="brand-logo__image"
+              />
             </a>
             <p className="mt-3 font-heading text-lg font-semibold text-foreground">{personalData.name}</p>
             <p className="mt-3 max-w-md text-sm leading-7 text-muted">
@@ -110,7 +120,7 @@ function Footer() {
           type="button"
           onClick={handleBackToTop}
           aria-label="Back to top"
-          className="focus-ring fixed right-4 bottom-4 z-40 flex size-11 items-center justify-center rounded-full border border-border-subtle bg-card-elevated text-foreground shadow-card transition-[border-color,background-color,transform] duration-200 hover:-translate-y-0.5 hover:border-border-hover hover:bg-card sm:right-6 sm:bottom-6"
+          className="focus-ring fixed right-4 bottom-24 z-40 flex size-11 items-center justify-center rounded-full border border-border-subtle bg-card-elevated text-foreground shadow-card transition-[border-color,background-color,transform] duration-200 hover:-translate-y-0.5 hover:border-border-hover hover:bg-card sm:right-6 sm:bottom-24"
         >
           <FiArrowUp aria-hidden="true" />
         </button>

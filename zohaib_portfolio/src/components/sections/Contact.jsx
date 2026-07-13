@@ -1,6 +1,7 @@
 import { motion, useReducedMotion } from 'framer-motion'
-import { useEffect, useRef, useState } from 'react'
-import { FiGithub, FiLinkedin, FiMail, FiMapPin, FiSend } from 'react-icons/fi'
+import { useState } from 'react'
+import { FiGithub, FiInstagram, FiLinkedin, FiMail, FiMapPin, FiSend } from 'react-icons/fi'
+import { FaFacebookF, FaXTwitter } from 'react-icons/fa6'
 import Badge from '../common/Badge.jsx'
 import Button from '../common/Button.jsx'
 import Card from '../common/Card.jsx'
@@ -49,7 +50,6 @@ function Contact() {
   const [errors, setErrors] = useState({})
   const [formState, setFormState] = useState('default')
   const [feedback, setFeedback] = useState('')
-  const preparingTimerRef = useRef(null)
   const shouldReduceMotion = useReducedMotion()
   const hidden = shouldReduceMotion ? { opacity: 1, y: 0 } : { opacity: 0, y: 18 }
   const visible = { opacity: 1, y: 0 }
@@ -63,13 +63,9 @@ function Contact() {
   const hasUsableEmail = isUsableContactLink(personalData.socialLinks.email)
   const hasUsableLinkedIn = isUsableContactLink(personalData.socialLinks.linkedin)
   const hasUsableGitHub = isUsableContactLink(personalData.socialLinks.github)
-
-  useEffect(
-    () => () => {
-      if (preparingTimerRef.current) window.clearTimeout(preparingTimerRef.current)
-    },
-    [],
-  )
+  const hasUsableInstagram = isUsableContactLink(personalData.socialLinks.instagram)
+  const hasUsableX = isUsableContactLink(personalData.socialLinks.x)
+  const hasUsableFacebook = isUsableContactLink(personalData.socialLinks.facebook)
 
   const handleChange = (event) => {
     const { name, value } = event.target
@@ -84,7 +80,7 @@ function Contact() {
     }
   }
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault()
     const nextErrors = Object.fromEntries(
       Object.entries(formValues)
@@ -110,30 +106,44 @@ function Contact() {
     }
 
     setErrors({})
-    setFormState('preparing')
-    setFeedback('Preparing your message...')
+    if (!hasUsableEmail) {
+      setFormState('error')
+      setFeedback('The contact email is not configured yet.')
+      return
+    }
 
-    preparingTimerRef.current = window.setTimeout(() => {
-      if (!hasUsableEmail) {
-        setFormState('info')
-        setFeedback('Add a valid contact email in personalData.js to enable the form.')
-        return
+    setFormState('submitting')
+    setFeedback('Sending your message...')
+
+    try {
+      const response = await fetch(`https://formsubmit.co/ajax/${emailAddress}`, {
+        method: 'POST',
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          name: formValues.fullName.trim(),
+          email: formValues.email.trim(),
+          subject: formValues.subject.trim(),
+          message: formValues.message.trim(),
+          _subject: `Portfolio contact: ${formValues.subject.trim()}`,
+          _template: 'table',
+        }),
+      })
+      const result = await response.json().catch(() => null)
+
+      if (!response.ok || result?.success === 'false') {
+        throw new Error('Submission failed')
       }
 
-      const body = [
-        `Name: ${formValues.fullName.trim()}`,
-        `Email: ${formValues.email.trim()}`,
-        '',
-        formValues.message.trim(),
-      ].join('\n')
-      const mailtoUrl = `mailto:${emailAddress}?subject=${encodeURIComponent(
-        formValues.subject.trim(),
-      )}&body=${encodeURIComponent(body)}`
-
-      window.location.href = mailtoUrl
-      setFormState('info')
-      setFeedback('Your email application has been opened with the message prepared.')
-    }, 150)
+      setFormValues(initialForm)
+      setFormState('success')
+      setFeedback('Thank you. Your message has been sent successfully.')
+    } catch {
+      setFormState('error')
+      setFeedback('Your message could not be sent. Please try again or use WhatsApp.')
+    }
   }
 
   return (
@@ -190,6 +200,30 @@ function Contact() {
                 unavailableText="Add GitHub URL in personalData.js"
               />
               <ContactMethod
+                icon={<FiInstagram />}
+                label="Instagram"
+                text="View Instagram profile"
+                href={hasUsableInstagram ? personalData.socialLinks.instagram : null}
+                external
+                unavailableText="Add Instagram URL in personalData.js"
+              />
+              <ContactMethod
+                icon={<FaXTwitter />}
+                label="X (Twitter)"
+                text="View X profile"
+                href={hasUsableX ? personalData.socialLinks.x : null}
+                external
+                unavailableText="Add X URL in personalData.js"
+              />
+              <ContactMethod
+                icon={<FaFacebookF />}
+                label="Facebook"
+                text="View Facebook profile"
+                href={hasUsableFacebook ? personalData.socialLinks.facebook : null}
+                external
+                unavailableText="Add Facebook URL in personalData.js"
+              />
+              <ContactMethod
                 icon={<FiMapPin />}
                 label="Location"
                 text={personalData.location}
@@ -218,9 +252,9 @@ function Contact() {
           transition={{ ...transition, delay: shouldReduceMotion ? 0 : 0.14 }}
         >
           <Card className="bg-card-elevated p-5 sm:p-7 lg:p-8">
-            <h3 className="text-xl font-semibold text-foreground">Prepare an Email</h3>
+            <h3 className="text-xl font-semibold text-foreground">Send Me a Message</h3>
             <p className="mt-2 text-sm leading-6 text-muted">
-              Complete the form to prepare a message in your default email application.
+              Complete the form and your message will be delivered to my contact email.
             </p>
 
             <form className="mt-7 grid gap-5 sm:grid-cols-2" onSubmit={handleSubmit} noValidate>
@@ -277,14 +311,18 @@ function Contact() {
                   type="submit"
                   size="large"
                   rightIcon={<FiSend />}
-                  disabled={formState === 'preparing'}
-                  className="w-full sm:w-auto"
+                  disabled={formState === 'submitting'}
+                  className="w-full"
                 >
-                  {formState === 'preparing' ? 'Preparing Message...' : 'Prepare Email'}
+                  {formState === 'submitting' ? 'Sending Message...' : 'Submit Message'}
                 </Button>
                 <p
                   className={`mt-4 min-h-6 text-sm ${
-                    formState === 'error' ? 'font-medium text-red-300' : 'text-foreground-secondary'
+                    formState === 'error'
+                      ? 'font-medium text-red-300'
+                      : formState === 'success'
+                        ? 'font-medium text-green-300'
+                        : 'text-foreground-secondary'
                   }`}
                   aria-live="polite"
                   role={formState === 'error' ? 'alert' : 'status'}
